@@ -10,16 +10,24 @@ import SwiftUI
 struct Math: View {
   @State private var isAnimating = false
   @State private var answer = ""
-  @State var correctAnswer = 1
+  @State private var answer1 = ""
+  @State var correctAnswer = 0
+  @State var correctAnswer1 = 0
   @State var choiceArray = [0, 1, 2, 3]
   @State private var operationType: OperationType = .addition
   @AppStorage("score") var score = 0
 
   @State var answerText = ""
+  @State var answerText1 = ""
   @State var isAnswerCorrect = false
+  @State var isAnswerCorrect1 = false
   @State var isShowCorrect = false
   @State var firstNumber = 0
   @State var secondNumber = 0
+
+  @State var thirdNumber = 0
+  @State var forthNumber = 0
+
   @State var difficulty = 0
   @State var selectedSign = 0
   @State var hide = false
@@ -44,6 +52,8 @@ struct Math: View {
             self.operationType = OperationType.allCases[newValue]
             generateAnswers()
           }
+
+        // пример 1
         HStack {
           Text("\(firstNumber) \(operationType.sign) \(secondNumber)")
             .font(.system(size: 25))
@@ -82,25 +92,55 @@ struct Math: View {
           }
         }
 
+        //пример 2
+        HStack {
+          Text("\(thirdNumber) \(operationType.sign) \(forthNumber)")
+            .font(.system(size: 25))
+            .bold()
+            .padding(.horizontal,20)
+            .background().cornerRadius(10)
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-          Button {
-            generateAnswers()
+          Text("=")
+            .font(.system(size: 35))
+            .foregroundColor(.black)
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-          } label: {
-           Text("Check")
-          }
-          .background()
+          TextField("answer", text: $answerText1, onEditingChanged: { _ in
+            checkAnswer1()
+          })
+          .keyboardType(.numberPad)
+          .multilineTextAlignment(.center)
+          .frame(width: 70)
+          .padding(.vertical, 5)
+          .background(.white)
+          .font(.system(size: 15, weight: .bold))
           .cornerRadius(10)
-          .padding(.horizontal,10)
-          .padding()
-          .padding(.top,10)
+          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
+          if isShowCorrect && answerText1 != "" {
+            if Int(answerText1) == correctAnswer1 {
+              Image(systemName: "checkmark")
+                .foregroundColor(.green)
+                .font(.system(size: 25, weight: .heavy))
+
+            } else if Int(answerText1) != correctAnswer1 {
+              Image(systemName: "xmark")
+                .foregroundColor(.red)
+                .font(.system(size: 25, weight: .heavy))
+            }
+          }
+        }
 
         Button {
-       checkAnswer()
-      isShowCorrect.toggle()
+          generateAnswers()
+          generateAnswers1()
+          isShowCorrect = false
+          answerText = ""
+          answerText1 = ""
+
         } label: {
-         Text("Check Answer")
+          Text("Generate")
         }
         .background()
         .cornerRadius(10)
@@ -108,43 +148,72 @@ struct Math: View {
         .padding()
         .padding(.top,10)
 
-Spacer()
-          HStack {
-            Text("Answer +: \(score)")
-              .font(.system(size: 15, weight: .bold))
-              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-            Text("Answer -: \(score)")
-              .font(.system(size: 15, weight: .bold))
-              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-          }.padding()
+
+        Button {
+          checkAnswer()
+          checkAnswer1()
+          isShowCorrect.toggle()
 
 
-          Text("Level")
-          withAnimation(.easeInOut(duration: 0.5)) {
-            Picker(selection: $difficulty, label:
-                    Text("Level")) {
-              ForEach(0..<difficultyArray.count, id: \.self) {
-                Text("\(difficultyArray[$0])")
-              }
+        } label: {
+          Text("Check Answer")
+        }
+        .background()
+        .cornerRadius(10)
+        .padding(.horizontal,10)
+        .padding()
+        .padding(.top,10)
+
+        Spacer()
+        HStack {
+          Text("Answer +: \(score)")
+            .font(.system(size: 15, weight: .bold))
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+          Text("Answer -: \(score)")
+            .font(.system(size: 15, weight: .bold))
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+        }.padding()
+
+
+        Text("Level")
+        withAnimation(.easeInOut(duration: 0.5)) {
+          Picker(selection: $difficulty, label:
+                  Text("Level")) {
+            ForEach(0..<difficultyArray.count, id: \.self) {
+              Text("\(difficultyArray[$0])")
             }
-                    .pickerStyle(SegmentedPickerStyle())
+          }
+                  .pickerStyle(SegmentedPickerStyle())
         }
       }
 
     }
     .onAppear {
-                    generateAnswers()
-                }
+      generateAnswers()
+      generateAnswers1()
+    }
   }
 
 
   func checkAnswer() {
-      guard let input = Int(answerText) else { return }
-      if input == correctAnswer {
-          isAnswerCorrect = true
-      } else {
-          isAnswerCorrect = false
-      }
+    guard let input = Int(answerText) else { return }
+    if input == correctAnswer && answerText1 != "" {
+      isAnswerCorrect = true
+    } else {
+      isAnswerCorrect = false
+    }
+  }
+
+
+  func checkAnswer1() {
+    guard let input = Int(answerText1) else { return }
+    if input == correctAnswer1 && answerText1 != "" {
+      isAnswerCorrect1 = true
+      self.score += 1
+    } else {
+      isAnswerCorrect1 = false
+      self.score -= 1
+    }
   }
 }
 
