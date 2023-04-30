@@ -46,7 +46,7 @@ struct MathView: View {
             generateAnswers()
           }
 
-        Text("How much ")
+        Text("Сколько будет ")
           .multilineTextAlignment(.center)
           .font(.system(size: 35, weight: .semibold))
 
@@ -68,7 +68,7 @@ struct MathView: View {
               degress = 0
 
             } label: {
-              AnswerButton(state: hide, number: choiceArray[index])
+              AnswerButton(number: choiceArray[index])
             }
           }
         }
@@ -80,55 +80,16 @@ struct MathView: View {
               generateAnswers()
               opacity = 0.0
             } label: {
-              AnswerButton(state: hide, number: choiceArray[index])
+              AnswerButton(number: choiceArray[index])
             }
           }
         }
         Spacer()
         VStack {
           Text("Score: \(score)")
-            .font(.system(size: 35, weight: .bold))
+            .font(.system(size: 30, weight: .bold))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-
-          if hide {
-            HStack {
-                  TextField("Answer", text: $answer)
-                .multilineTextAlignment(.center)
-                    .keyboardType(.numberPad)
-                    .background(.white)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundColor(.black)
-                    .frame(width: 140)
-                    .cornerRadius(5)
-                    .padding()
-Spacer()
-                  Button(action: {
-                    let userAnswer = Int(answer) ?? 0
-                    if userAnswer == correctAnswer {
-                      generateAnswers()
-                      score += 1
-                      answer = ""
-                    } else {
-                      generateAnswers()
-                      score -= 1
-                      answer = ""
-                    }
-                  }) {
-                    Text("Check")
-                      .padding(.horizontal,30)
-                      .padding(.vertical,4)
-                      .font(.system(size: 20))
-                      .foregroundColor(.black)
-                      .background(.white)
-                      .cornerRadius(5)
-                      .padding(.trailing, 20)
-                  }
-              }
-            }
-
-          HStack {
             Button(action: {
               withAnimation(.easeOut(duration: 0.7)) {
                 score = 0
@@ -139,7 +100,7 @@ Spacer()
               }
             }) {
               Text("Reset")
-                .font(.system(size: 18, weight: .medium))
+                .font(.system(size: 30, weight: .medium))
                 .font(.headline)
                 .foregroundColor(.black)
                 .padding(.horizontal, 10)
@@ -151,34 +112,20 @@ Spacer()
                 .padding(.leading, 15)
 
           }
-            Spacer()
-            Button {
-              withAnimation(.easeOut(duration: 1.0)) {
-                hide.toggle()
 
-              }
-            }label: {
-              Text(hide ? "Show answer" : "Hide answer")
-                .font(.system(size: 18, weight: .medium))
-                .font(.headline)
-                .foregroundColor(.black)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
-                .background(Color.blue)
-                .cornerRadius(5)
-                .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-                .padding(.trailing, 15)
-            }
           }
 
           Spacer()
 
-          Text("Уровень сложности")
+          Text("Level")
+          .font(.system(size: 20, weight: .medium))
+          .padding()
+
           withAnimation(.easeInOut(duration: 0.5)) {
             Picker(selection: $difficulty, label:
                     Text("Level")) {
               ForEach(0..<difficultyLevel.count, id: \.self) {
-                Text("\(difficultyLevel[$0])")
+                Text("\(difficultyArray[$0])")
               }
             }
                     .pickerStyle(SegmentedPickerStyle())
@@ -196,7 +143,7 @@ Spacer()
 
   }
 
-}
+
 
 struct MathView_Previews: PreviewProvider {
   static var previews: some View {

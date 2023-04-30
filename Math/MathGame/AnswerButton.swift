@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct AnswerButton: View {
-    var state: Bool
     var number : Int
     
     var body: some View {
         
             Text("\(number)")
             .frame(width: 90, height: 70)
-            .font(.system(size: 45, weight: .bold)).opacity(state ? 0.01 : 1)
+            .font(.system(size: 45, weight: .bold))
                 .padding(7)
                 .background(LinearGradient(colors: [.blue, .green], startPoint: .top, endPoint: .bottom)).cornerRadius(30)
                 .foregroundColor(.black)
@@ -29,6 +28,6 @@ struct AnswerButton: View {
 
 struct AnswerButton_Previews: PreviewProvider {
     static var previews: some View {
-      AnswerButton(state: false, number: 100)
+      AnswerButton(number: 100)
     }
 }
