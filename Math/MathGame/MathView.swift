@@ -46,7 +46,7 @@ struct MathView: View {
             generateAnswers()
           }
 
-        Text("Сколько будет ")
+        Text("How much ")
           .multilineTextAlignment(.center)
           .font(.system(size: 35, weight: .semibold))
 
@@ -86,14 +86,14 @@ struct MathView: View {
         }
         Spacer()
         VStack {
-          Text("Счет: \(score)")
+          Text("Score: \(score)")
             .font(.system(size: 35, weight: .bold))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
 
           if hide {
             HStack {
-                  TextField("Ответ", text: $answer)
+                  TextField("Answer", text: $answer)
                 .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
                     .background(.white)
@@ -116,7 +116,7 @@ Spacer()
                       answer = ""
                     }
                   }) {
-                    Text("Отправить")
+                    Text("Check")
                       .padding(.horizontal,30)
                       .padding(.vertical,4)
                       .font(.system(size: 20))
@@ -138,7 +138,7 @@ Spacer()
                 isAnimating = false
               }
             }) {
-              Text("Сбросить счет")
+              Text("Reset")
                 .font(.system(size: 18, weight: .medium))
                 .font(.headline)
                 .foregroundColor(.black)
@@ -158,7 +158,7 @@ Spacer()
 
               }
             }label: {
-              Text(hide ? "Показать ответы" : "Скрыть ответы")
+              Text(hide ? "Show answer" : "Hide answer")
                 .font(.system(size: 18, weight: .medium))
                 .font(.headline)
                 .foregroundColor(.black)

@@ -17,9 +17,11 @@ struct Math: View {
   @State private var answerTexts = ["", "", "", "", ""]
   @State private var isAnswerCorrects = [false, false, false, false, false]
   @State private var isShowCorrect = false
-  @State private var score = 0
+  @State private var scoreRight = 0
+  @State private var scoreWrong = 0
 
-  private let difficultyArray = [10, 20, 30, 50, 100]
+  private var difficultyArray = [20, 50, 100, 500, 1000]
+  private var difficultyLevel = ["1", "2", "3", "4", "5"]
 
   // OperationType place in Settings file
   private var operationType: OperationType {
@@ -28,7 +30,7 @@ struct Math: View {
 
   var body: some View {
     ZStack {
-      LinearGradient(gradient: Gradient(colors: [.blue, .yellow, .green]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
+      LinearGradient(gradient: Gradient(colors: [.purple, .yellow, .green]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
 
       VStack {
         Picker(selection: $selectedSign, label:
@@ -75,10 +77,15 @@ struct Math: View {
                   .foregroundColor(.green)
                   .font(.system(size: 25, weight: .heavy))
 
-              } else {
+              } else if isShowCorrect && !isAnswerCorrects[index] {
+
                 Image(systemName: "xmark")
                   .foregroundColor(.red)
                   .font(.system(size: 25, weight: .heavy))
+                Text("\(correctAnswers[index])")
+                  .font(.system(size: 25))
+                  .foregroundColor(.red)
+                  .padding(.horizontal, 10)
               }
             }
           }
@@ -89,13 +96,14 @@ struct Math: View {
           isShowCorrect = false
           answerTexts = ["", "", "", "", ""]
         } label: {
-          Text("Generate")
+          Text("Next")
         }
+        .padding()
         .background()
         .cornerRadius(10)
-        .padding(.horizontal, 10)
         .padding()
-        .padding(.top,10)
+        .foregroundColor(.black)
+        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
         Button {
           checkAnswers()
@@ -103,33 +111,43 @@ struct Math: View {
         } label: {
           Text("Check Answer")
         }
+        .padding()
         .background()
         .cornerRadius(10)
-        .padding(.horizontal,10)
-        .padding()
-        .padding(.top,10)
+        .foregroundColor(.red)
+        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+
 
         Spacer()
 
-        HStack {
-          Text("Answer +: \(score)")
-            .font(.system(size: 15, weight: .bold))
+        HStack(spacing: 30) {
+          Text("Answer + : \(scoreRight)")
+            .font(.system(size: 20))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-          Text("Answer -: \(score)")
-            .font(.system(size: 15, weight: .bold))
+          Text("Answer - : \(scoreWrong)")
+            .font(.system(size: 20))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
         }
-        .padding()
+
+        Button("Reset") {
+          scoreRight = 0
+          scoreWrong = 0
+        }.padding()
+        Spacer()
 
         Text("Level")
         withAnimation(.easeInOut(duration: 0.5)) {
           Picker(selection: $difficulty, label:
                   Text("Level")) {
-            ForEach(0..<difficultyArray.count, id: \.self) {
-              Text("\(difficultyArray[$0])")
+            ForEach(0..<difficultyLevel.count, id: \.self) {
+              Text("\(difficultyLevel[$0])")
             }
           }
                   .pickerStyle(SegmentedPickerStyle())
+                  .onChange(of: difficulty) { _ in
+                        generateAnswers()
+                      }
         }
       }
     }
@@ -148,9 +166,9 @@ struct Math: View {
       guard let input = Int(answerTexts[i]) else { continue }
       isAnswerCorrects[i] = input == correctAnswers[i]
       if isAnswerCorrects[i] {
-        score += 1
+        scoreRight += 1
       } else {
-        score -= 1
+        scoreWrong -= 1
       }
     }
   }

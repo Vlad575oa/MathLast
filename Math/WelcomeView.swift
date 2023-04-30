@@ -15,7 +15,7 @@ struct WelcomeView: View {
         LinearGradient(gradient: Gradient(colors: [Color.green, Color.indigo, Color.green]), startPoint: .topLeading, endPoint: .bottomTrailing)
           .edgesIgnoringSafeArea(.all)
         VStack {
-          Text("Добро пожаловать в моё приложение")
+          Text("Добро пожаловать")
             .multilineTextAlignment(.center)
             .font(.system(size: 30, weight: .heavy, design: .default))
             .shimmer(.init(tint: .white.opacity(0.5), highlight: .white, blur: 5))
@@ -25,13 +25,13 @@ struct WelcomeView: View {
 
           VStack(spacing: 35) {
             NavigationLink(destination: Math()) {
-              Text("Алфавит")
+              Text("Examples")
                 .modifier(TextModifier(color: .green))
             }
 
 
             NavigationLink(destination: MathView()) {
-              Text("Математика")
+              Text("Math Game")
                 .modifier(TextModifier(color: .purple))
             }
           }
