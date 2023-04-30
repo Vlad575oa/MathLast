@@ -15,7 +15,7 @@ struct AnswerButton: View {
         
             Text("\(number)")
             .frame(width: 90, height: 70)
-            .font(.system(size: 45, weight: .bold)).opacity(state ? 0.02 : 1)
+            .font(.system(size: 45, weight: .bold)).opacity(state ? 0.01 : 1)
                 .padding(7)
                 .background(LinearGradient(colors: [.blue, .green], startPoint: .top, endPoint: .bottom)).cornerRadius(30)
                 .foregroundColor(.black)

@@ -21,9 +21,9 @@ enum OperationType: String, CaseIterable {
     case .subtraction:
       return "-"
     case .multiplication:
-      return "*"
+      return "×"
     case .division:
-      return "/"
+      return "÷"
     }
   }
 }
@@ -76,8 +76,8 @@ extension MathView {
       answerList.append(correctAnswer)
       choiceArray = answerList.shuffled()
     case 3: // division
-      secondNumber = Int.random(in: 2...10)
-      correctAnswer = Int.random(in: 1...(difficultyArray[difficulty]/secondNumber)) // the result must be an integer
+      secondNumber = Int.random(in: 2...9)
+      correctAnswer = Int.random(in: 2...(difficultyArray[difficulty]/secondNumber)) // the result must be an integer
       firstNumber = correctAnswer * secondNumber
       var answerList = [Int]()
 

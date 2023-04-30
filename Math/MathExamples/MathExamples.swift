@@ -7,154 +7,99 @@
 
 import SwiftUI
 
+
 struct Math: View {
   @State private var isAnimating = false
-  @State private var answer = ""
-  @State private var answer1 = ""
-  @State var correctAnswer = 0
-  @State var correctAnswer1 = 0
-  @State var choiceArray = [0, 1, 2, 3]
-  @State private var operationType: OperationType = .addition
-  @AppStorage("score") var score = 0
+  @State private var difficulty = 0
+  @State private var selectedSign = 0
+  @State private var numbers = [(0, 0), (0, 0),(0, 0), (0, 0),(0, 0)]
+  @State private var correctAnswers = [0, 0, 0, 0, 0]
+  @State private var answerTexts = ["", "", "", "", ""]
+  @State private var isAnswerCorrects = [false, false, false, false, false]
+  @State private var isShowCorrect = false
+  @State private var score = 0
 
-  @State var answerText = ""
-  @State var answerText1 = ""
-  @State var isAnswerCorrect = false
-  @State var isAnswerCorrect1 = false
-  @State var isShowCorrect = false
-  @State var firstNumber = 0
-  @State var secondNumber = 0
+  private let difficultyArray = [10, 20, 30, 50, 100]
 
-  @State var thirdNumber = 0
-  @State var forthNumber = 0
-
-  @State var difficulty = 0
-  @State var selectedSign = 0
-  @State var hide = false
-
-  var difficultyArray = [10, 20, 30, 50, 100]
-
+  // OperationType place in Settings file
+  private var operationType: OperationType {
+    OperationType.allCases[selectedSign]
+  }
 
   var body: some View {
     ZStack {
-      LinearGradient(gradient: Gradient(colors: [.green, .yellow, .blue]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
+      LinearGradient(gradient: Gradient(colors: [.blue, .yellow, .green]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
 
       VStack {
         Picker(selection: $selectedSign, label:
                 Text("Level")) {
           ForEach(0..<OperationType.allCases.count, id: \.self) { index in
             Text("\(OperationType.allCases[index].rawValue)")
-
-          }
-        }.pickerStyle(.segmented)
-          .onChange(of: selectedSign) { newValue in
-            self.selectedSign = newValue
-            self.operationType = OperationType.allCases[newValue]
-            generateAnswers()
-          }
-
-        // пример 1
-        HStack {
-          Text("\(firstNumber) \(operationType.sign) \(secondNumber)")
-            .font(.system(size: 25))
-            .bold()
-            .padding(.horizontal,20)
-            .background().cornerRadius(10)
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-          Text("=")
-            .font(.system(size: 35))
-            .foregroundColor(.black)
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-          TextField("answer", text: $answerText, onEditingChanged: { _ in
-            checkAnswer()
-          })
-          .multilineTextAlignment(.center)
-          .frame(width: 70)
-          .padding(.vertical, 5)
-          .background(.white)
-          .font(.system(size: 15, weight: .bold))
-          .cornerRadius(10)
-          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-          if isShowCorrect {
-            if isAnswerCorrect {
-              Image(systemName: "checkmark")
-                .foregroundColor(.green)
-                .font(.system(size: 25, weight: .heavy))
-
-            } else {
-              Image(systemName: "xmark")
-                .foregroundColor(.red)
-                .font(.system(size: 25, weight: .heavy))
-            }
           }
         }
+                .pickerStyle(.segmented)
+                .onChange(of: selectedSign) { _ in
+                  generateAnswers()
+                }
 
-        //пример 2
-        HStack {
-          Text("\(thirdNumber) \(operationType.sign) \(forthNumber)")
-            .font(.system(size: 25))
-            .bold()
-            .padding(.horizontal,20)
-            .background().cornerRadius(10)
+        ForEach(numbers.indices) { index in
+          HStack {
+            Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
+              .font(.system(size: 25))
+              .bold()
+              .padding(.horizontal,20)
+              .padding(.vertical, 5)
+              .background().cornerRadius(10)
+              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+            Text("=")
+              .font(.system(size: 35))
+              .foregroundColor(.black)
+              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+            TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
+              checkAnswer(index: index)
+            })
+            .multilineTextAlignment(.center)
+            .frame(width: 70)
+            .padding(.vertical, 5)
+            .padding(.horizontal,5)
+            .background(.white)
+            .font(.system(size: 20, weight: .bold))
+            .cornerRadius(7)
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-          Text("=")
-            .font(.system(size: 35))
-            .foregroundColor(.black)
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+            if isShowCorrect {
+              if isAnswerCorrects[index] {
+                Image(systemName: "checkmark")
+                  .foregroundColor(.green)
+                  .font(.system(size: 25, weight: .heavy))
 
-          TextField("answer", text: $answerText1, onEditingChanged: { _ in
-            checkAnswer1()
-          })
-          .keyboardType(.numberPad)
-          .multilineTextAlignment(.center)
-          .frame(width: 70)
-          .padding(.vertical, 5)
-          .background(.white)
-          .font(.system(size: 15, weight: .bold))
-          .cornerRadius(10)
-          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-          if isShowCorrect && answerText1 != "" {
-            if Int(answerText1) == correctAnswer1 {
-              Image(systemName: "checkmark")
-                .foregroundColor(.green)
-                .font(.system(size: 25, weight: .heavy))
-
-            } else if Int(answerText1) != correctAnswer1 {
-              Image(systemName: "xmark")
-                .foregroundColor(.red)
-                .font(.system(size: 25, weight: .heavy))
+              } else {
+                Image(systemName: "xmark")
+                  .foregroundColor(.red)
+                  .font(.system(size: 25, weight: .heavy))
+              }
             }
           }
         }
 
         Button {
           generateAnswers()
-          generateAnswers1()
           isShowCorrect = false
-          answerText = ""
-          answerText1 = ""
-
+          answerTexts = ["", "", "", "", ""]
         } label: {
           Text("Generate")
         }
         .background()
         .cornerRadius(10)
-        .padding(.horizontal,10)
+        .padding(.horizontal, 10)
         .padding()
         .padding(.top,10)
 
-
         Button {
-          checkAnswer()
-          checkAnswer1()
+          checkAnswers()
           isShowCorrect.toggle()
-
-
         } label: {
           Text("Check Answer")
         }
@@ -165,6 +110,7 @@ struct Math: View {
         .padding(.top,10)
 
         Spacer()
+
         HStack {
           Text("Answer +: \(score)")
             .font(.system(size: 15, weight: .bold))
@@ -172,8 +118,8 @@ struct Math: View {
           Text("Answer -: \(score)")
             .font(.system(size: 15, weight: .bold))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-        }.padding()
-
+        }
+        .padding()
 
         Text("Level")
         withAnimation(.easeInOut(duration: 0.5)) {
@@ -186,35 +132,57 @@ struct Math: View {
                   .pickerStyle(SegmentedPickerStyle())
         }
       }
-
     }
     .onAppear {
       generateAnswers()
-      generateAnswers1()
     }
   }
 
+  private func checkAnswer(index: Int) {
+    guard let input = Int(answerTexts[index]) else { return }
+    isAnswerCorrects[index] = input == correctAnswers[index]
+  }
 
-  func checkAnswer() {
-    guard let input = Int(answerText) else { return }
-    if input == correctAnswer && answerText1 != "" {
-      isAnswerCorrect = true
-    } else {
-      isAnswerCorrect = false
+  private func checkAnswers() {
+    for i in 0..<numbers.count {
+      guard let input = Int(answerTexts[i]) else { continue }
+      isAnswerCorrects[i] = input == correctAnswers[i]
+      if isAnswerCorrects[i] {
+        score += 1
+      } else {
+        score -= 1
+      }
     }
   }
 
+  private func generateAnswers() {
 
-  func checkAnswer1() {
-    guard let input = Int(answerText1) else { return }
-    if input == correctAnswer1 && answerText1 != "" {
-      isAnswerCorrect1 = true
-      self.score += 1
-    } else {
-      isAnswerCorrect1 = false
-      self.score -= 1
+    // Generate numbers and answers for each problem
+    for i in 0..<numbers.count {
+      switch operationType {
+      case .addition:
+        numbers[i].0 = Int.random(in: 1...(difficultyArray[difficulty]/2))
+        numbers[i].1 = Int.random(in: 1...(difficultyArray[difficulty]/2))
+        correctAnswers[i] = numbers[i].0 + numbers[i].1
+
+      case .subtraction:
+        numbers[i].0 = Int.random(in: 1...(difficultyArray[difficulty]/2))
+        numbers[i].1 = Int.random(in: 1...numbers[i].0)
+        correctAnswers[i] = numbers[i].0 - numbers[i].1
+
+      case .multiplication:
+        numbers[i].0 = Int.random(in: 2...(difficultyArray[difficulty]/2))
+        numbers[i].1 = Int.random(in: 2...9)
+        correctAnswers[i] = numbers[i].0 * numbers[i].1
+
+      case .division:
+        numbers[i].1 = Int.random(in: 2...9)
+        correctAnswers[i] = Int.random(in: 1...(difficultyArray[difficulty]))
+        numbers[i].0 = correctAnswers[i] * numbers[i].1
+      }
     }
   }
+
 }
 
 struct Math_Previews: PreviewProvider {

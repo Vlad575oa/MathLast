@@ -20,11 +20,12 @@ struct MathView: View {
 
   @State var firstNumber = 0
   @State var secondNumber = 0
-  @State var difficulty = 0
   @State var selectedSign = 0
   @State var hide = false
 
-  var difficultyArray = [30, 50, 100, 500]
+  @State var difficulty = 0
+  var difficultyArray = [30, 50, 100, 500, 1000]
+  var difficultyLevel = ["1", "2", "3", "4", "5"]
 
 
   var body: some View {
@@ -93,13 +94,14 @@ struct MathView: View {
           if hide {
             HStack {
                   TextField("Ответ", text: $answer)
+                .multilineTextAlignment(.center)
                     .keyboardType(.numberPad)
+                    .background(.white)
                     .textFieldStyle(.roundedBorder)
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .frame(width: 150)
-                    .background(.white)
+                    .frame(width: 140)
+                    .cornerRadius(5)
                     .padding()
 Spacer()
                   Button(action: {
@@ -120,7 +122,7 @@ Spacer()
                       .font(.system(size: 20))
                       .foregroundColor(.black)
                       .background(.white)
-                      .cornerRadius(3)
+                      .cornerRadius(5)
                       .padding(.trailing, 20)
                   }
               }
@@ -175,17 +177,25 @@ Spacer()
           withAnimation(.easeInOut(duration: 0.5)) {
             Picker(selection: $difficulty, label:
                     Text("Level")) {
-              ForEach(0..<difficultyArray.count, id: \.self) {
-                Text("\(difficultyArray[$0])")
+              ForEach(0..<difficultyLevel.count, id: \.self) {
+                Text("\(difficultyLevel[$0])")
               }
             }
-          .pickerStyle(SegmentedPickerStyle())
+                    .pickerStyle(SegmentedPickerStyle())
+                    .onChange(of: difficulty) { _ in
+                      generateAnswers()
+                    }
           }
         }
         Spacer()
       }
+      .onAppear {
+        generateAnswers()
+      }
     }
+
   }
+
 }
 
 struct MathView_Previews: PreviewProvider {
