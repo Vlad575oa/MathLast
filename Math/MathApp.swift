@@ -11,7 +11,7 @@ import SwiftUI
 struct MathApp: App {
     var body: some Scene {
         WindowGroup {
-          MathView()
+          WelcomeView()
         }
     }
 }

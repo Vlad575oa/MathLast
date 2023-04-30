@@ -24,14 +24,11 @@ struct WelcomeView: View {
           Spacer()
 
           VStack(spacing: 35) {
-//            NavigationLink(destination: Math()) {
-//              Text("Алфавит")
-//                .modifier(TextModifier(color: .green))
-//            }
-//            NavigationLink(destination: AlphabetEn()) {
-//              Text("Alphabet EN")
-//                .modifier(TextModifier(color: .orange))
-//            }
+            NavigationLink(destination: Math()) {
+              Text("Алфавит")
+                .modifier(TextModifier(color: .green))
+            }
+
 
             NavigationLink(destination: MathView()) {
               Text("Математика")

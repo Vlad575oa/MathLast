@@ -11,11 +11,14 @@
 		CE91BCE329FE4FBF002D21AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE91BCE229FE4FBF002D21AE /* Assets.xcassets */; };
 		CE91BCE629FE4FBF002D21AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE91BCE529FE4FBF002D21AE /* Preview Assets.xcassets */; };
 		CE91BCED29FE4FD2002D21AE /* MathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCEC29FE4FD2002D21AE /* MathView.swift */; };
-		CE91BCEF29FE4FD7002D21AE /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCEE29FE4FD7002D21AE /* Extension.swift */; };
+		CE91BCEF29FE4FD7002D21AE /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCEE29FE4FD7002D21AE /* Settings.swift */; };
 		CE91BCF129FE4FDB002D21AE /* AnswerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCF029FE4FDB002D21AE /* AnswerButton.swift */; };
 		CE91BCF329FE4FE4002D21AE /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCF229FE4FE4002D21AE /* ShimmerEffect.swift */; };
 		CE91BCF529FE4FE9002D21AE /* TextModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCF429FE4FE8002D21AE /* TextModifiers.swift */; };
 		CE91BCF929FE503B002D21AE /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCF829FE503B002D21AE /* WelcomeView.swift */; };
+		CE91BCFC29FE50BA002D21AE /* MathExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFB29FE50BA002D21AE /* MathExamples.swift */; };
+		CE91BCFE29FE50DD002D21AE /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFD29FE50DD002D21AE /* Extension.swift */; };
+		CE91BD0029FE53D0002D21AE /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFF29FE53D0002D21AE /* QuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,11 +27,14 @@
 		CE91BCE229FE4FBF002D21AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE91BCE529FE4FBF002D21AE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CE91BCEC29FE4FD2002D21AE /* MathView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathView.swift; sourceTree = "<group>"; };
-		CE91BCEE29FE4FD7002D21AE /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		CE91BCEE29FE4FD7002D21AE /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		CE91BCF029FE4FDB002D21AE /* AnswerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerButton.swift; sourceTree = "<group>"; };
 		CE91BCF229FE4FE4002D21AE /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		CE91BCF429FE4FE8002D21AE /* TextModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextModifiers.swift; sourceTree = "<group>"; };
 		CE91BCF829FE503B002D21AE /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		CE91BCFB29FE50BA002D21AE /* MathExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExamples.swift; sourceTree = "<group>"; };
+		CE91BCFD29FE50DD002D21AE /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		CE91BCFF29FE53D0002D21AE /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 			children = (
 				CE91BCDE29FE4FBE002D21AE /* MathApp.swift */,
 				CE91BCF829FE503B002D21AE /* WelcomeView.swift */,
+				CE91BCFA29FE508C002D21AE /* MathExamples */,
 				CE91BCF729FE502D002D21AE /* MathGame */,
 				CE91BCF629FE4FF8002D21AE /* Settings */,
 				CE91BCE229FE4FBF002D21AE /* Assets.xcassets */,
@@ -92,10 +99,20 @@
 			isa = PBXGroup;
 			children = (
 				CE91BCEC29FE4FD2002D21AE /* MathView.swift */,
-				CE91BCEE29FE4FD7002D21AE /* Extension.swift */,
+				CE91BCEE29FE4FD7002D21AE /* Settings.swift */,
 				CE91BCF029FE4FDB002D21AE /* AnswerButton.swift */,
 			);
 			path = MathGame;
+			sourceTree = "<group>";
+		};
+		CE91BCFA29FE508C002D21AE /* MathExamples */ = {
+			isa = PBXGroup;
+			children = (
+				CE91BCFB29FE50BA002D21AE /* MathExamples.swift */,
+				CE91BCFD29FE50DD002D21AE /* Extension.swift */,
+				CE91BCFF29FE53D0002D21AE /* QuestionView.swift */,
+			);
+			path = MathExamples;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,11 +185,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE91BD0029FE53D0002D21AE /* QuestionView.swift in Sources */,
+				CE91BCFE29FE50DD002D21AE /* Extension.swift in Sources */,
 				CE91BCF129FE4FDB002D21AE /* AnswerButton.swift in Sources */,
 				CE91BCF529FE4FE9002D21AE /* TextModifiers.swift in Sources */,
+				CE91BCFC29FE50BA002D21AE /* MathExamples.swift in Sources */,
 				CE91BCF929FE503B002D21AE /* WelcomeView.swift in Sources */,
 				CE91BCED29FE4FD2002D21AE /* MathView.swift in Sources */,
-				CE91BCEF29FE4FD7002D21AE /* Extension.swift in Sources */,
+				CE91BCEF29FE4FD7002D21AE /* Settings.swift in Sources */,
 				CE91BCF329FE4FE4002D21AE /* ShimmerEffect.swift in Sources */,
 				CE91BCDF29FE4FBE002D21AE /* MathApp.swift in Sources */,
 			);
