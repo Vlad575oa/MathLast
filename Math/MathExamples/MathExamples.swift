@@ -33,11 +33,12 @@ struct Math: View {
   }
 
   var body: some View {
+
     ZStack {
       LinearGradient(gradient: Gradient(colors: [.purple, .yellow, .green]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
 
-      ScrollView {
         VStack {
+
           Picker(selection: $selectedSign, label:
                   Text("Level")) {
             ForEach(0..<OperationType.allCases.count, id: \.self) { index in
@@ -48,113 +49,121 @@ struct Math: View {
                   .onChange(of: selectedSign) { _ in
                     generateAnswers()
                   }
-
-          ForEach(numbers.indices, id: \.self) { index in
-            HStack {
-              Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
-                .font(.system(size: 25))
-                .bold()
-                .padding(.horizontal,20)
+Spacer()
+          ScrollView {
+            ForEach(numbers.indices, id: \.self) { index in
+              HStack(spacing: 10) {
+                Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
+                  .font(.system(size: 20))
+                  .bold()
+                  .padding(.horizontal,20)
+                  .padding(.vertical, 5)
+                  .foregroundColor(.black)
+                  .background(.white).cornerRadius(10)
+                  .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+                
+                Text("=")
+                  .font(.system(size: 30))
+                  .foregroundColor(.black)
+                  .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+                
+                TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
+                  checkAnswer(index: index)
+                })
+                .multilineTextAlignment(.center)
+                .frame(width: 90)
                 .padding(.vertical, 5)
-                .foregroundColor(.black)
-                .background(.white).cornerRadius(10)
+                .padding(.horizontal,5)
+                .background(.white)
+                .foregroundColor(.blue)
+                .font(.system(size: 20, weight: .bold))
+                .cornerRadius(7)
                 .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+                .keyboardType(.numberPad)
+                .onChange(of: answerTexts[index]) { _ in
+                  if isAllFieldsFilled {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                      UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
+                  }
+                }
+              
 
-              Text("=")
-                .font(.system(size: 35))
-                .foregroundColor(.black)
-                .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+                if isShow {
+                  if isAnswerCorrects[index] {
+                    Image(systemName: "checkmark")
+                      .foregroundColor(.green)
+                      .font(.system(size: 20, weight: .medium))
 
-              TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
-                checkAnswer(index: index)
-              })
-              .multilineTextAlignment(.center)
-              .frame(width: 70)
-              .padding(.vertical, 5)
-              .padding(.horizontal,5)
-              .background(.white)
-              .foregroundColor(.blue)
-              .font(.system(size: 25, weight: .bold))
-              .cornerRadius(7)
-              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-              .keyboardType(.numberPad)
-              .onChange(of: answerTexts[index]) { _ in
-                if isAllFieldsFilled {
-                  DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                  } else if isShow && !isAnswerCorrects[index] && answerTexts[index] != "" {
+
+                    Image(systemName: "xmark")
+                      .foregroundColor(.red)
+                      .font(.system(size: 15, weight: .medium))
+                    Text("\(correctAnswers[index])")
+                      .font(.system(size: 20))
+                      .foregroundColor(.red)
+                      .padding(.horizontal, 10)
                   }
                 }
               }
-
-              if isShow {
-                if isAnswerCorrects[index] {
-                  Image(systemName: "checkmark")
-                    .foregroundColor(.green)
-                    .font(.system(size: 25, weight: .heavy))
-
-                } else if isShow && !isAnswerCorrects[index] && answerTexts[index] != "" {
-
-                  Image(systemName: "xmark")
-                    .foregroundColor(.red)
-                    .font(.system(size: 25, weight: .heavy))
-                  Text("\(correctAnswers[index])")
-                    .font(.system(size: 25))
-                    .foregroundColor(.red)
-                    .padding(.horizontal, 10)
-                }
-              }
             }
+
+
+            Button {
+              checkAnswers()
+            } label: {
+              Text("Check Answer")
+                .font(.system(size: 20))
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 7)
+            .background(.white)
+            .cornerRadius(10)
+            .foregroundColor(.blue)
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+            .padding(.top, 10)
+
+            Button {
+              generateAnswers()
+              isShow = false
+              scoreCount = false
+              answerTexts = ["", "", "", "", ""]
+            } label: {
+              Text("Next")
+                .font(.system(size: 20))
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 7)
+            .background(.white)
+            .cornerRadius(10)
+            .foregroundColor(.black)
+            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+            .padding(.top, 10)
           }
-
-
-          Button {
-            checkAnswers()
-          } label: {
-            Text("Check Answer")
-              .font(.system(size: 20))
-          }
-          .padding()
-          .background(.white)
-          .cornerRadius(10)
-          .foregroundColor(.blue)
-          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-          Button {
-            generateAnswers()
-            isShow = false
-            scoreCount = false
-            answerTexts = ["", "", "", "", ""]
-          } label: {
-            Text("Next")
-              .font(.system(size: 20))
-          }
-          .padding()
-          .background(.white)
-          .cornerRadius(10)
-          .foregroundColor(.black)
-          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
+          Spacer()
 
           HStack(spacing: 30) {
             Text("Answer + : \(scoreRight)")
-              .font(.system(size: 25))
+              .font(.system(size: 20))
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
             Text("Answer - : \(scoreWrong)")
-              .font(.system(size: 25))
+              .font(.system(size: 20))
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-          }.padding()
+          } .padding(.top, 10)
 
           Button("Reset") {
             scoreRight = 0
             scoreWrong = 0
-          }.padding()
+          }
+          .padding(.horizontal, 20)
+          .padding(.vertical, 5)
             .font(.system(size: 20))
             .background(.white)
             .cornerRadius(10)
 
-          Spacer()
           Text("Level")
-            .font(.system(size: 25))
+            .font(.system(size: 20))
 
           withAnimation(.easeInOut(duration: 0.5)) {
             Picker(selection: $difficulty, label:
@@ -169,20 +178,32 @@ struct Math: View {
                     }
           }
         }
+
+
         .toolbar {
           ToolbarItem(placement: .keyboard) {
-            Button("Hide Keyboard") {
-              UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            HStack {
+              Button("Hide Keyboard") {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+              }
+              Button("Next") {
+
+              }.onTapGesture {
+
+              }
             }
           }
         }
         .onAppear {
           generateAnswers()
         }
-      }.ignoresSafeArea(.keyboard)
 
     }
+    .ignoresSafeArea(.keyboard)
   }
+
+
+
 
   private func checkAnswer(index: Int) {
     guard let input = Int(answerTexts[index]) else {
