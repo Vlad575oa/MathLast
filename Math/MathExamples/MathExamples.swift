@@ -119,7 +119,7 @@ Spacer()
             Button {
               checkAnswers()
             } label: {
-              Text("Check Answer")
+              Text("Check Answers")
                 .font(.system(size: 20))
             }
             .padding(.horizontal, 20)
@@ -150,10 +150,10 @@ Spacer()
           Spacer()
 
           HStack(spacing: 30) {
-            Text("Answer + : \(scoreRight)")
+            Text("\(NSLocalizedString("Answer", comment: "")) + : \(scoreRight)")
               .font(.system(size: 20))
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-            Text("Answer - : \(scoreWrong)")
+            Text("\(NSLocalizedString("Answer", comment: "")) - : \(scoreWrong)")
               .font(.system(size: 20))
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
           } .padding(.top, 10)

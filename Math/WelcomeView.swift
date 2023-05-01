@@ -38,15 +38,6 @@ struct WelcomeView: View {
         }
         .navigationBarTitle("Menu", displayMode: .inline)
         .foregroundColor(.white)
-        //        .navigationBarItems(leading:
-        //        Button(action: {
-        //        }) {
-        //        },trailing:
-        //                              NavigationLink(destination: SettingsView()) {
-        //          Image(systemName: "gear")
-        //          .foregroundColor(.white)
-        //        }
-        //        )
       }
     }
 

@@ -13,9 +13,9 @@ struct AnswerButton: View {
     var body: some View {
         
             Text("\(number)")
-            .frame(width: 90, height: 70)
-            .font(.system(size: 45, weight: .bold))
-                .padding(7)
+            .frame(width: 130, height: 70)
+            .font(.system(size: 35, weight: .bold))
+             
                 .background(LinearGradient(colors: [.blue, .green], startPoint: .top, endPoint: .bottom)).cornerRadius(30)
                 .foregroundColor(.black)
                 .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)

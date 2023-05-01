@@ -11,7 +11,7 @@
 "Math examples" = "Реши примеры";
 "Math Game" = "Выбери ответ";
 
-"How much?" = "How much?";
+"How much?" = "Сколько будет?";
 
 "answer" = "ответ";
 "Check Answers" = "Проверь ответы";
@@ -23,7 +23,11 @@
 "Please fill all answer" = "Пожалуйста, заполните все ответы";
 "answer" = "ответ";
 
+"Hide Keyboard" = "Скрыть Клавиатуру";
+
 "addition" = "сложение";
 "subtraction" = "вычитание";
 "multiplication" = "умножение";
 "division" = "деление";
+
+"Score:" = "Счёт:";

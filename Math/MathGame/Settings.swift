@@ -8,22 +8,21 @@
 import Foundation
 //MARK - enum
 enum OperationType: String, CaseIterable {
-  case addition = "addition"
-  case subtraction = "subtraction"
-  case multiplication = "multiplication"
-  case division = "division"
-
+  case addition = "+"
+  case subtraction = "-"
+  case multiplication = "×"
+  case division = "÷"
 
   var sign: String {
     switch self {
     case .addition:
-      return "+"
+      return NSLocalizedString("+", comment: "Addition sign")
     case .subtraction:
-      return "-"
+      return NSLocalizedString("-", comment: "Subtraction sign")
     case .multiplication:
-      return "×"
+      return NSLocalizedString("×", comment: "Multiplication sign")
     case .division:
-      return "÷"
+      return NSLocalizedString("÷", comment: "Division sign")
     }
   }
 }

@@ -23,7 +23,11 @@
 "Empty answer" = "Empty answer";
 "Please fill all answer" = "Please fill all answer";
 
+"Hide Keyboard" = "Hide Keyboard";
+
 "addition" = "addition";
 "subtraction" = "subtraction";
 "multiplication" = "multiplication";
 "division" = "division";
+
+"Score:" = "Score:";

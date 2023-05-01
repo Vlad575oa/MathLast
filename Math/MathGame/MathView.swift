@@ -53,10 +53,11 @@ struct MathView: View {
         
         
         Text("\(firstNumber) \(operationType.sign) \(secondNumber)")
-          .font(.system(size: 45, weight: .bold))
+          .font(.system(size: 35, weight: .bold))
           .bold()
-          .padding()
-          .background(LinearGradient(colors: [.purple, .blue], startPoint:.leading, endPoint: .trailing)).cornerRadius(40)
+          .padding(.vertical, 5)
+          .padding(.horizontal, 10)
+          .background(LinearGradient(colors: [.purple, .blue], startPoint:.leading, endPoint: .trailing)).cornerRadius(20)
           .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
         
         HStack(spacing: 20) {
@@ -87,8 +88,8 @@ struct MathView: View {
         }
         Spacer()
         VStack {
-          Text("Score: \(score)")
-            .font(.system(size: 30, weight: .bold))
+          Text("\(NSLocalizedString("Score:", comment: "")) \(score)")
+            .font(.system(size: 20, weight: .medium))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
           
           Button(action: {
@@ -101,7 +102,7 @@ struct MathView: View {
             }
           }) {
             Text("Reset")
-              .font(.system(size: 30, weight: .medium))
+              .font(.system(size:20, weight: .medium))
               .font(.headline)
               .foregroundColor(.black)
               .padding(.horizontal, 10)
@@ -110,15 +111,13 @@ struct MathView: View {
               .cornerRadius(5)
               .scaleEffect(isAnimating ? 1.1 : 1.0)
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-              .padding(.leading, 15)
+              .padding(.top, 15)
+
             
           }
         }
-        Spacer()
-        
         Text("Level")
           .font(.system(size: 20, weight: .medium))
-          .padding()
         
         withAnimation(.easeInOut(duration: 0.5)) {
           Picker(selection: $difficulty, label:
@@ -133,7 +132,6 @@ struct MathView: View {
                   }
         }
       }
-      Spacer()
     }
     .onAppear {
       generateAnswers()
