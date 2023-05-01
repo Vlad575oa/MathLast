@@ -18,7 +18,6 @@
 		CE91BCF929FE503B002D21AE /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCF829FE503B002D21AE /* WelcomeView.swift */; };
 		CE91BCFC29FE50BA002D21AE /* MathExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFB29FE50BA002D21AE /* MathExamples.swift */; };
 		CE91BCFE29FE50DD002D21AE /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFD29FE50DD002D21AE /* Extension.swift */; };
-		CE91BD0029FE53D0002D21AE /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCFF29FE53D0002D21AE /* QuestionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +33,6 @@
 		CE91BCF829FE503B002D21AE /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		CE91BCFB29FE50BA002D21AE /* MathExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathExamples.swift; sourceTree = "<group>"; };
 		CE91BCFD29FE50DD002D21AE /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		CE91BCFF29FE53D0002D21AE /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +108,6 @@
 			children = (
 				CE91BCFB29FE50BA002D21AE /* MathExamples.swift */,
 				CE91BCFD29FE50DD002D21AE /* Extension.swift */,
-				CE91BCFF29FE53D0002D21AE /* QuestionView.swift */,
 			);
 			path = MathExamples;
 			sourceTree = "<group>";
@@ -185,7 +182,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE91BD0029FE53D0002D21AE /* QuestionView.swift in Sources */,
 				CE91BCFE29FE50DD002D21AE /* Extension.swift in Sources */,
 				CE91BCF129FE4FDB002D21AE /* AnswerButton.swift in Sources */,
 				CE91BCF529FE4FE9002D21AE /* TextModifiers.swift in Sources */,

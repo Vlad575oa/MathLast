@@ -16,7 +16,8 @@ struct Math: View {
   @State private var correctAnswers = [0, 0, 0, 0, 0]
   @State private var answerTexts = ["", "", "", "", ""]
   @State private var isAnswerCorrects = [false, false, false, false, false]
-  @State private var isShowCorrect = false
+  @State private var isShow = false
+  @State private var scoreCount = false
   @State private var scoreRight = 0
   @State private var scoreWrong = 0
 
@@ -36,7 +37,7 @@ struct Math: View {
         Picker(selection: $selectedSign, label:
                 Text("Level")) {
           ForEach(0..<OperationType.allCases.count, id: \.self) { index in
-            Text("\(OperationType.allCases[index].rawValue)")
+            Text(OperationType.allCases[index].rawValue)
           }
         }
                 .pickerStyle(.segmented)
@@ -44,7 +45,7 @@ struct Math: View {
                   generateAnswers()
                 }
 
-        ForEach(numbers.indices) { index in
+        ForEach(numbers.indices, id: \.self) { index in
           HStack {
             Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
               .font(.system(size: 25))
@@ -71,14 +72,15 @@ struct Math: View {
             .cornerRadius(7)
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-            if isShowCorrect {
+
+            if isShow {
               if isAnswerCorrects[index] {
                 Image(systemName: "checkmark")
                   .foregroundColor(.green)
                   .font(.system(size: 25, weight: .heavy))
-
-              } else if isShowCorrect && !isAnswerCorrects[index] {
-
+                
+              } else if isShow && !isAnswerCorrects[index] && answerTexts[index] != "" {
+                
                 Image(systemName: "xmark")
                   .foregroundColor(.red)
                   .font(.system(size: 25, weight: .heavy))
@@ -92,8 +94,20 @@ struct Math: View {
         }
 
         Button {
+          checkAnswers()
+        } label: {
+          Text("Check Answer")
+        }
+        .padding()
+        .background()
+        .cornerRadius(10)
+        .foregroundColor(.blue)
+        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+        Button {
           generateAnswers()
-          isShowCorrect = false
+          isShow = false
+          scoreCount = false
           answerTexts = ["", "", "", "", ""]
         } label: {
           Text("Next")
@@ -104,36 +118,23 @@ struct Math: View {
         .padding()
         .foregroundColor(.black)
         .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-        Button {
-          checkAnswers()
-          isShowCorrect.toggle()
-        } label: {
-          Text("Check Answer")
-        }
-        .padding()
-        .background()
-        .cornerRadius(10)
-        .foregroundColor(.red)
-        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-
-
         Spacer()
 
         HStack(spacing: 30) {
           Text("Answer + : \(scoreRight)")
-            .font(.system(size: 20))
+            .font(.system(size: 25))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
           Text("Answer - : \(scoreWrong)")
-            .font(.system(size: 20))
+            .font(.system(size: 25))
             .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-        }
+        }.padding()
 
         Button("Reset") {
           scoreRight = 0
           scoreWrong = 0
         }.padding()
+          .background(.white)
+          .cornerRadius(10)
         Spacer()
 
         Text("Level")
@@ -157,19 +158,40 @@ struct Math: View {
   }
 
   private func checkAnswer(index: Int) {
-    guard let input = Int(answerTexts[index]) else { return }
-    isAnswerCorrects[index] = input == correctAnswers[index]
+      guard let input = Int(answerTexts[index]) else {
+          isAnswerCorrects[index] = false
+          return
+      }
+      isAnswerCorrects[index] = input == correctAnswers[index]
   }
 
   private func checkAnswers() {
-    for i in 0..<numbers.count {
-      guard let input = Int(answerTexts[i]) else { continue }
-      isAnswerCorrects[i] = input == correctAnswers[i]
-      if isAnswerCorrects[i] {
-        scoreRight += 1
-      } else {
-        scoreWrong -= 1
+    guard !answerTexts.contains("") else {
+      let alert = UIAlertController(title: "Empty answer",
+                                    message: "Please fill in all answer fields before checking your answers.",
+                                    preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+         let window = windowScene.windows.first {
+        window.rootViewController?.present(alert, animated: true, completion: nil)
       }
+      return
+    }
+    var newScoreRight = 0
+    var newScoreWrong = 0
+
+    if isShow == false {
+      for i in 0..<numbers.count {
+        isAnswerCorrects[i] = Int(answerTexts[i]) == correctAnswers[i]
+        if isAnswerCorrects[i] {
+          newScoreRight += 1
+        } else {
+          newScoreWrong -= 1
+        }
+      }
+      scoreRight += newScoreRight
+      scoreWrong += newScoreWrong
+      isShow = true
     }
   }
 

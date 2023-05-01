@@ -8,10 +8,10 @@
 import Foundation
 //MARK - enum
 enum OperationType: String, CaseIterable {
-  case addition = "Сложение"
-  case subtraction = "Вычитание"
-  case multiplication = "Умножение"
-  case division = "Деление"
+  case addition = "addition"
+  case subtraction = "subtraction"
+  case multiplication = "multiplication"
+  case division = "division"
 
 
   var sign: String {
