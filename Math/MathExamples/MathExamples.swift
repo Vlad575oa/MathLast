@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct Math: View {
-  @State private var isAnimating = false
+
   @State private var difficulty = 0
   @State private var selectedSign = 0
   @State private var numbers = [(0, 0), (0, 0),(0, 0), (0, 0),(0, 0)]
@@ -168,7 +168,7 @@ struct Math: View {
   private func checkAnswers() {
     guard !answerTexts.contains("") else {
       let alert = UIAlertController(title: "Empty answer",
-                                    message: "Please fill in all answer fields before checking your answers.",
+                                    message: "Please fill all answer",
                                     preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
       if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
