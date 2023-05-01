@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  Math
+
+  Created by user on 01.05.2023.
+  
+*/
+"CFBundleDisplayName" = "Математика";
+
+"answer" = "ответ";
+"Check Answers" = "Проверь ответы";
+"Next" = "Следующий пример";
+"Answer" = "Ответ";
+"Reset" = "Сбросить";
+"Level" = "Уровень";
+"Empty answer" = "Нет ответа";
+"Please fill all answer" = "Пожалуйста, заполните все ответы";
+"answer" = "ответ";
+
