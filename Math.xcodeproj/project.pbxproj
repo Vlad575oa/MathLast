@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		CE3EC1FD29FF8E360017E6C0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE3EC1FF29FF8E360017E6C0 /* Localizable.strings */; };
 		CE62218729FFCAC700D8DFE1 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE62218629FFCAC700D8DFE1 /* TextField.swift */; };
-		CE62218A29FFD3A800D8DFE1 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = CE62218929FFD3A800D8DFE1 /* Introspect */; };
-		CE62218C29FFD3A800D8DFE1 /* Introspect-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = CE62218B29FFD3A800D8DFE1 /* Introspect-Dynamic */; };
-		CE62218E29FFD3A800D8DFE1 /* Introspect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = CE62218D29FFD3A800D8DFE1 /* Introspect-Static */; };
 		CE91BCDF29FE4FBE002D21AE /* MathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91BCDE29FE4FBE002D21AE /* MathApp.swift */; };
 		CE91BCE329FE4FBF002D21AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE91BCE229FE4FBF002D21AE /* Assets.xcassets */; };
 		CE91BCE629FE4FBF002D21AE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE91BCE529FE4FBF002D21AE /* Preview Assets.xcassets */; };
@@ -46,9 +43,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE62218A29FFD3A800D8DFE1 /* Introspect in Frameworks */,
-				CE62218C29FFD3A800D8DFE1 /* Introspect-Dynamic in Frameworks */,
-				CE62218E29FFD3A800D8DFE1 /* Introspect-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,9 +133,6 @@
 			);
 			name = Math;
 			packageProductDependencies = (
-				CE62218929FFD3A800D8DFE1 /* Introspect */,
-				CE62218B29FFD3A800D8DFE1 /* Introspect-Dynamic */,
-				CE62218D29FFD3A800D8DFE1 /* Introspect-Static */,
 			);
 			productName = Math;
 			productReference = CE91BCDB29FE4FBE002D21AE /* Math.app */;
@@ -173,7 +164,6 @@
 			);
 			mainGroup = CE91BCD229FE4FBE002D21AE;
 			packageReferences = (
-				CE62218829FFD3A800D8DFE1 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = CE91BCDC29FE4FBE002D21AE /* Products */;
 			projectDirPath = "";
@@ -423,35 +413,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		CE62218829FFD3A800D8DFE1 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.3;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		CE62218929FFD3A800D8DFE1 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE62218829FFD3A800D8DFE1 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
-		};
-		CE62218B29FFD3A800D8DFE1 /* Introspect-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE62218829FFD3A800D8DFE1 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "Introspect-Dynamic";
-		};
-		CE62218D29FFD3A800D8DFE1 /* Introspect-Static */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CE62218829FFD3A800D8DFE1 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "Introspect-Static";
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CE91BCD329FE4FBE002D21AE /* Project object */;
 }

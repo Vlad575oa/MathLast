@@ -5,6 +5,13 @@
 //  Created by user on 30.04.2023.
 //
 
+//
+//  SwiftUIView.swift
+//  Math
+//
+//  Created by user on 30.04.2023.
+//
+
 import SwiftUI
 
 
@@ -61,12 +68,12 @@ Spacer()
                   .foregroundColor(.black)
                   .background(.white).cornerRadius(10)
                   .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-                
+
                 Text("=")
                   .font(.system(size: 30))
                   .foregroundColor(.black)
                   .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-                
+
                 TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
                   checkAnswer(index: index)
                 })
@@ -87,7 +94,6 @@ Spacer()
                     }
                   }
                 }
-              
 
                 if isShow {
                   if isAnswerCorrects[index] {
@@ -185,11 +191,6 @@ Spacer()
             HStack {
               Button("Hide Keyboard") {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-              }
-              Button("Next") {
-
-              }.onTapGesture {
-
               }
             }
           }
