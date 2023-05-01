@@ -28,148 +28,168 @@ struct Math: View {
   private var operationType: OperationType {
     OperationType.allCases[selectedSign]
   }
+  private var isAllFieldsFilled: Bool {
+    answerTexts.allSatisfy { !$0.isEmpty }
+  }
 
   var body: some View {
     ZStack {
       LinearGradient(gradient: Gradient(colors: [.purple, .yellow, .green]),startPoint: .top, endPoint: .bottom ).ignoresSafeArea()
 
-      VStack {
-        Picker(selection: $selectedSign, label:
-                Text("Level")) {
-          ForEach(0..<OperationType.allCases.count, id: \.self) { index in
-            Text(OperationType.allCases[index].rawValue)
+      ScrollView {
+        VStack {
+          Picker(selection: $selectedSign, label:
+                  Text("Level")) {
+            ForEach(0..<OperationType.allCases.count, id: \.self) { index in
+              Text(OperationType.allCases[index].rawValue)
+            }
           }
-        }
-                .pickerStyle(.segmented)
-                .onChange(of: selectedSign) { _ in
-                  generateAnswers()
-                }
+                  .pickerStyle(.segmented)
+                  .onChange(of: selectedSign) { _ in
+                    generateAnswers()
+                  }
 
-        ForEach(numbers.indices, id: \.self) { index in
-          HStack {
-            Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
-              .font(.system(size: 25))
-              .bold()
-              .padding(.horizontal,20)
+          ForEach(numbers.indices, id: \.self) { index in
+            HStack {
+              Text("\(numbers[index].0) \(operationType.sign) \(numbers[index].1)")
+                .font(.system(size: 25))
+                .bold()
+                .padding(.horizontal,20)
+                .padding(.vertical, 5)
+                .foregroundColor(.black)
+                .background(.white).cornerRadius(10)
+                .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+              Text("=")
+                .font(.system(size: 35))
+                .foregroundColor(.black)
+                .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+
+              TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
+                checkAnswer(index: index)
+              })
+              .multilineTextAlignment(.center)
+              .frame(width: 70)
               .padding(.vertical, 5)
-              .background().cornerRadius(10)
+              .padding(.horizontal,5)
+              .background(.white)
+              .foregroundColor(.blue)
+              .font(.system(size: 25, weight: .bold))
+              .cornerRadius(7)
               .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+              .keyboardType(.numberPad)
+              .onChange(of: answerTexts[index]) { _ in
+                if isAllFieldsFilled {
+                  DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                  }
+                }
+              }
 
-            Text("=")
-              .font(.system(size: 35))
-              .foregroundColor(.black)
-              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+              if isShow {
+                if isAnswerCorrects[index] {
+                  Image(systemName: "checkmark")
+                    .foregroundColor(.green)
+                    .font(.system(size: 25, weight: .heavy))
 
-            TextField("answer", text: $answerTexts[index], onEditingChanged: { _ in
-              checkAnswer(index: index)
-            })
-            .multilineTextAlignment(.center)
-            .frame(width: 70)
-            .padding(.vertical, 5)
-            .padding(.horizontal,5)
-            .background(.white)
-            .font(.system(size: 20, weight: .bold))
-            .cornerRadius(7)
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+                } else if isShow && !isAnswerCorrects[index] && answerTexts[index] != "" {
 
-
-            if isShow {
-              if isAnswerCorrects[index] {
-                Image(systemName: "checkmark")
-                  .foregroundColor(.green)
-                  .font(.system(size: 25, weight: .heavy))
-                
-              } else if isShow && !isAnswerCorrects[index] && answerTexts[index] != "" {
-                
-                Image(systemName: "xmark")
-                  .foregroundColor(.red)
-                  .font(.system(size: 25, weight: .heavy))
-                Text("\(correctAnswers[index])")
-                  .font(.system(size: 25))
-                  .foregroundColor(.red)
-                  .padding(.horizontal, 10)
+                  Image(systemName: "xmark")
+                    .foregroundColor(.red)
+                    .font(.system(size: 25, weight: .heavy))
+                  Text("\(correctAnswers[index])")
+                    .font(.system(size: 25))
+                    .foregroundColor(.red)
+                    .padding(.horizontal, 10)
+                }
               }
             }
           }
-        }
-
-        Button {
-          checkAnswers()
-        } label: {
-          Text("Check Answer")
-            .font(.system(size: 20))
-        }
-        .padding()
-        .background()
-        .cornerRadius(10)
-        .foregroundColor(.blue)
-        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-
-        Button {
-          generateAnswers()
-          isShow = false
-          scoreCount = false
-          answerTexts = ["", "", "", "", ""]
-        } label: {
-          Text("Next")
-            .font(.system(size: 20))
-        }
-        .padding()
-        .background()
-        .cornerRadius(10)
-        .padding()
-        .foregroundColor(.black)
-        .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
 
-        HStack(spacing: 30) {
-          Text("Answer + : \(scoreRight)")
-            .font(.system(size: 25))
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-          Text("Answer - : \(scoreWrong)")
-            .font(.system(size: 25))
-            .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-        }.padding()
-
-        Button("Reset") {
-          scoreRight = 0
-          scoreWrong = 0
-        }.padding()
-          .font(.system(size: 20))
+          Button {
+            checkAnswers()
+          } label: {
+            Text("Check Answer")
+              .font(.system(size: 20))
+          }
+          .padding()
           .background(.white)
           .cornerRadius(10)
+          .foregroundColor(.blue)
+          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-        Spacer()
+          Button {
+            generateAnswers()
+            isShow = false
+            scoreCount = false
+            answerTexts = ["", "", "", "", ""]
+          } label: {
+            Text("Next")
+              .font(.system(size: 20))
+          }
+          .padding()
+          .background(.white)
+          .cornerRadius(10)
+          .foregroundColor(.black)
+          .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
 
-        Text("Level")
-          .font(.system(size: 25))
 
+          HStack(spacing: 30) {
+            Text("Answer + : \(scoreRight)")
+              .font(.system(size: 25))
+              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+            Text("Answer - : \(scoreWrong)")
+              .font(.system(size: 25))
+              .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
+          }.padding()
 
-        withAnimation(.easeInOut(duration: 0.5)) {
-          Picker(selection: $difficulty, label:
-                  Text("Level")) {
-            ForEach(0..<difficultyLevel.count, id: \.self) {
-              Text("\(difficultyLevel[$0])")
+          Button("Reset") {
+            scoreRight = 0
+            scoreWrong = 0
+          }.padding()
+            .font(.system(size: 20))
+            .background(.white)
+            .cornerRadius(10)
+
+          Spacer()
+          Text("Level")
+            .font(.system(size: 25))
+
+          withAnimation(.easeInOut(duration: 0.5)) {
+            Picker(selection: $difficulty, label:
+                    Text("Level")) {
+              ForEach(0..<difficultyLevel.count, id: \.self) {
+                Text("\(difficultyLevel[$0])")
+              }
+            }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .onChange(of: difficulty) { _ in
+                      generateAnswers()
+                    }
+          }
+        }
+        .toolbar {
+          ToolbarItem(placement: .keyboard) {
+            Button("Hide Keyboard") {
+              UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
           }
-                  .pickerStyle(SegmentedPickerStyle())
-                  .onChange(of: difficulty) { _ in
-                        generateAnswers()
-                      }
         }
-      }
-    }
-    .onAppear {
-      generateAnswers()
+        .onAppear {
+          generateAnswers()
+        }
+      }.ignoresSafeArea(.keyboard)
+
     }
   }
 
   private func checkAnswer(index: Int) {
-      guard let input = Int(answerTexts[index]) else {
-          isAnswerCorrects[index] = false
-          return
-      }
-      isAnswerCorrects[index] = input == correctAnswers[index]
+    guard let input = Int(answerTexts[index]) else {
+      isAnswerCorrects[index] = false
+      return
+    }
+    isAnswerCorrects[index] = input == correctAnswers[index]
   }
 
   private func checkAnswers() {
