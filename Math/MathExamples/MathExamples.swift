@@ -97,6 +97,7 @@ struct Math: View {
           checkAnswers()
         } label: {
           Text("Check Answer")
+            .font(.system(size: 20))
         }
         .padding()
         .background()
@@ -111,6 +112,7 @@ struct Math: View {
           answerTexts = ["", "", "", "", ""]
         } label: {
           Text("Next")
+            .font(.system(size: 20))
         }
         .padding()
         .background()
@@ -118,7 +120,7 @@ struct Math: View {
         .padding()
         .foregroundColor(.black)
         .shadow(color: Color.gray.opacity(0.9), radius: 4, x: 5, y: 5)
-        Spacer()
+
 
         HStack(spacing: 30) {
           Text("Answer + : \(scoreRight)")
@@ -133,11 +135,16 @@ struct Math: View {
           scoreRight = 0
           scoreWrong = 0
         }.padding()
+          .font(.system(size: 20))
           .background(.white)
           .cornerRadius(10)
+
         Spacer()
 
         Text("Level")
+          .font(.system(size: 25))
+
+
         withAnimation(.easeInOut(duration: 0.5)) {
           Picker(selection: $difficulty, label:
                   Text("Level")) {

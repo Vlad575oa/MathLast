@@ -15,17 +15,16 @@ struct WelcomeView: View {
         LinearGradient(gradient: Gradient(colors: [Color.green, Color.indigo, Color.green]), startPoint: .topLeading, endPoint: .bottomTrailing)
           .edgesIgnoringSafeArea(.all)
         VStack {
-          Text("Добро пожаловать")
+          Text("Welcome")
             .multilineTextAlignment(.center)
             .font(.system(size: 30, weight: .heavy, design: .default))
             .shimmer(.init(tint: .white.opacity(0.5), highlight: .white, blur: 5))
-            .padding(.all, 10)
+            .padding(.all, 50)
 
-          Spacer()
 
           VStack(spacing: 35) {
             NavigationLink(destination: Math()) {
-              Text("Examples")
+              Text("Math examples")
                 .modifier(TextModifier(color: .green))
             }
 
@@ -37,7 +36,7 @@ struct WelcomeView: View {
           }
           Spacer()
         }
-        .navigationBarTitle("Меню", displayMode: .inline)
+        .navigationBarTitle("Menu", displayMode: .inline)
         .foregroundColor(.white)
         //        .navigationBarItems(leading:
         //        Button(action: {

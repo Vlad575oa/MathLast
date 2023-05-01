@@ -40,6 +40,7 @@ struct MathView: View {
             
           }
         }.pickerStyle(.segmented)
+          .padding(.top, 20)
           .onChange(of: selectedSign) { newValue in
             self.selectedSign = newValue
             self.operationType = OperationType.allCases[newValue]

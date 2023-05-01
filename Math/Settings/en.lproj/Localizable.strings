@@ -1,0 +1,29 @@
+/* 
+  Localizable.strings
+  Math
+
+  Created by user on 01.05.2023.
+  
+*/
+
+"CFBundleDisplayName" = "MathGame";
+"Menu" = "Menu";
+"Welcome" = "Welcome";
+"Math examples" = "Math examples";
+"Math Game" = "Math Game";
+
+"How much?" = "How much?";
+
+"answer" = "answer";
+"Check Answer" = "Check Answer";
+"Next" = "Next";
+"Answer" = "Answer";
+"Reset" = "Reset";
+"Level" = "Level";
+"Empty answer" = "Empty answer";
+"Please fill all answer" = "Please fill all answer";
+
+"addition" = "addition";
+"subtraction" = "subtraction";
+"multiplication" = "multiplication";
+"division" = "division";

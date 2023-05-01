@@ -5,7 +5,13 @@
   Created by user on 01.05.2023.
   
 */
-"CFBundleDisplayName" = "Математика";
+"CFBundleDisplayName" = "Математика для детей";
+"Menu" = "Меню";
+"Welcome" = "Добро пожаловать";
+"Math examples" = "Реши примеры";
+"Math Game" = "Выбери ответ";
+
+"How much?" = "How much?";
 
 "answer" = "ответ";
 "Check Answers" = "Проверь ответы";
@@ -17,3 +23,7 @@
 "Please fill all answer" = "Пожалуйста, заполните все ответы";
 "answer" = "ответ";
 
+"addition" = "сложение";
+"subtraction" = "вычитание";
+"multiplication" = "умножение";
+"division" = "деление";
